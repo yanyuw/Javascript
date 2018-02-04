@@ -21,3 +21,7 @@ const arrWithoutLoop = (n) => /* TODO */
 
 // console.log(arrWithoutLoop(5)); //[0, 1, 2, 3, 4]
 // console.log(arrWithoutLoop(0)); //[]
+
+// function arrWithoutLoop(n){
+//     return n <= 0 ? [] : arrWithoutLoop(n - 1).concat(n - 1);
+// }

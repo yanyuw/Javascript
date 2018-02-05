@@ -26,6 +26,10 @@ var Foo = function(){
 var bar = new Foo()
 console.log(bar.a) //2
 //请问console.log的输出？
+/* 构造函数不需要返回值。
+使用new来创建对象时，如果return的是非对象则会忽而略返回值;
+如果return的是对象，则返回该对象。
+*/
 
 //题目3
 var map = Object.create(null); // 没有原型

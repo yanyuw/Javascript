@@ -1,0 +1,28 @@
+.background    { background: rgb(52, 166, 251);
+                 table-layout: fixed;
+                 border-spacing: 0;              }
+                 /* 用于修改默认的样式 */
+.background td { padding: 0;                     }
+.lava          { background: rgb(255, 100, 100); }
+.wall          { background: white;              }
+.actor  { position: absolute;            }
+.coin   { background: rgb(241, 229, 89); }
+.player { background: rgb(64, 64, 64);   }
+.lost .player {
+  background: rgb(160, 64, 64);
+}
+/* 触摸熔岩后，玩家的颜色变成暗红色，显示烧焦 */
+.won .player {
+  box-shadow: -4px -7px 8px white, 4px -7px 8px white;
+}
+/* 硬币收集完后，增加了一个顶部一个右上角的模糊的白色阴影来创建一个白色光环效应。 */
+
+/* 以上两项分别在玩家赢或输时起效 */
+.game {
+    overflow: hidden;
+    max-width: 600px;
+    max-height: 450px;
+    position: relative;
+}
+/* 给游戏一个最大的大小来确保在这个盒子之外的东西都是不可见的
+？？给外部元素一个相对位置使里面的活动元素处于关卡的左上角？？ */

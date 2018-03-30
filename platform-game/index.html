@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>A Platform Game</title>
+  <script type="text/javascript" src="./bundle.js"></script>
+  <link rel="stylesheet" href="./main.css">
+  <!-- <style>.monster { background: purple }</style> -->
+</head>
+<body>
+  <script>
+
+
+  //ex1：
+    // The old runGame function. Modify it...
+  //   async function runGame(plans, Display) {
+  //   var lives = 3;
+  //   for (let level = 0; level < plans.length && lives > 0;) {
+  //     console.log("Lives: " + lives);
+  //     let status = await runLevel(new Level(plans[level]),
+  //                                 Display);
+  //     if (status == "won") level++;
+  //     else{
+  //       lives--; // 不是won就是lose 减少生命
+  //     }
+  //   }
+  //   if(lives == 0){
+  //     console.log("You're lose!")
+  //     runGame(plans,Display); //重新加载游戏从第一关开始
+  //   }
+  //   else{
+  //     console.log("You've won!");
+  //   }
+  // }
+
+  
+  //ex2:
+//   function runLevel(level, Display) {
+//     let display = new Display(document.body, level);
+//     let state = State.start(level);
+//     let ending = 1;
+//     let isRun = 'Y';
+//     return new Promise(resolve => {
+//       function esc(event) {
+//         if(event.key != "Escape")
+//           return ;
+//         event.preventDefault();//取消默认;
+//         if(isRun == 'N'){
+//           isRun = 'Y';
+//           runAnimation(f);
+//         } else {
+//           isRun = 'N';
+//         }
+//       }
+//       window.addEventListener("keydown", esc);
+//       var arrowKeys =
+//   trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"]);
+// //必须
+//       function f(time){
+//         if (isRun == 'N') {
+//           return false;
+//         }
+//         state = state.update(time, arrowKeys);
+//         display.setState(state);
+//         if (state.status == "playing") {
+//           return true;
+//         } else if (ending > 0) {
+//           ending -= time;
+//           return true;
+//         } else {
+//           display.clear();
+//           window.removeEventListener("keydown",esc);
+//           arrowKeys.unregister();
+//           resolve(state.status);
+//           return false;
+//         }
+//       }
+//       runAnimation(f);
+//     });
+//   }
+//   function trackKeys(keys) {
+//   let down = Object.create(null);
+//   function track(event) {
+//     if (keys.includes(event.key)) {
+//       down[event.key] = event.type == "keydown";
+//       event.preventDefault();//取消事件的默认动作
+//     }
+//   }
+//   window.addEventListener("keydown", track);
+//   window.addEventListener("keyup", track);
+//   //element.addEventListener(event, function, useCapture) 
+//   //分别代表指定事件、事件触发时的执行函数和布尔值（可选）
+//   down.unregister = () => {
+//     window.removeEventListener("keydown",track);
+//     window.removeEventListener("keyup",track);
+//   }
+//   return down;
+// }
+
+  //ex3:
+
+//     // Complete the constructor, update, and collide methods
+//     // var monsterspeed = 5;
+    
+//     class Monster {
+//       constructor(pos, speed) {
+//           this.pos = pos;
+//           this.speed = speed;
+//           }
+
+//       get type() { return "monster"; }
+
+//       static create(pos,speed) {
+//         return new Monster(pos.plus(new Vec(0, -1)), new Vec(2,0));
+//       }
+
+//       update(time, state) {
+//         //   let player = state.player;
+//         //   let speed = (player.pos.x < this.pos.x ? -1 : 1) * time * monsterspeed;
+//         //   // 让怪物追着玩家
+//         //   let newpos = new Vec(this.pos.x + speed, this.pos.y);
+//         //   if(state.level.touches(newpos, this.size, "wall")){
+//         //       return this;
+//         //   }
+//         //   else{
+//         //       return new Monster(newpos);
+//         //   }
+//         let newPos = this.pos.plus(this.speed.times(time));
+//         if (!state.level.touches(newPos, this.size, "wall")) {
+//             return new Monster(newPos, this.speed);
+//         } else {
+//             return new Monster(this.pos, this.speed.times(-1));//乘以-1来向相反的方向运动
+//         }
+//         //模仿岩浆使怪物固定来回移动
+//       }
+
+//       collide(state) {
+//           let player = state.player;
+//           if(player.pos.y + player.size.y < this.pos.y + 0.3){//玩家的下端距离怪物的上端0.3内
+//             let filtered = state.actors.filter(a => a != this);
+//             return new State(state.level, filtered, state.status);
+//           } else {
+//               return new State(state.level, state.actors, "lost");
+//           }
+//       }
+//     }
+
+//     Monster.prototype.size = new Vec(1.2, 2);
+
+//     levelChars["M"] = Monster;
+
+//     runLevel(new Level(`
+// ..................................
+// .################################.
+// .#..............................#.
+// .#..............................#.
+// .#..............................#.
+// .#...........................o..#.
+// .#..@...........................#.
+// .##########..............########.
+// ..........#..o..o..o..o..#........
+// ..........#...........M..#........
+// ..........################........
+// ..................................
+// `), DOMDisplay);
+
+  </script>
+</body>
+</html>

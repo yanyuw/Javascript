@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>A To Do List</title>
+  <style>
+      .head{
+          text-align: center;
+      }
+      .parent{
+          position:relative;
+      }
+      #app{
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+      }
+      .finished{
+          text-decoration: line-through;
+          color: grey;
+      }
+      .todo{
+          outline: none;
+          width:25%;
+      }
+      .delbut{
+          color:red;
+          float: right;
+      }
+      .list{
+          margin-top: 5px;
+      }
+  </style>
+</head>
+<body>
+    <script src="./vue.js"></script>
+    <h1 class = 'head'>TO DO LIST</h1>
+    <div class = "parent">
+    <div id = "app">
+        <input v-model = "newtodo" v-on:keyup.enter = "addnew" >
+        <button v-on:click = "addnew" style="float:right">Add</button>
+
+        <ul class = "todolist">
+            <li class = "list" v-for = "todo in todos">
+                <input v-model = "todo.text" class = "todo" v-bind:class = "{finished: todo.isFinish}">
+                <input type="checkbox" v-on:click = "done(todo)">
+                <button class ="delbut" v-on:click = "deltodo(todo)">x</button>
+            </li>
+        </ul>
+        
+    </div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                todos: []
+            },
+            methods:{
+                addnew(){
+                    this.todos.push({
+                        text:this.newtodo,
+                        isFinish:false
+                    })
+                    this.newtodo = ''
+                },
+                deltodo(todo){
+                    var index = this.todos.indexOf(todo);
+                    this.todos.splice(index,1);
+                },
+                done(todo){
+                    todo.isFinish = !todo.isFinish;
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>

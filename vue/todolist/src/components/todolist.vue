@@ -1,56 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>A To Do List</title>
-  <style>
-      li{
-          list-style:none;  
-      }
-      ul{
-          padding: 0;
-      }
-      .head{
-          text-align: center;
-      }
-      .parent{
-          position:relative;
-      }
-      #app{
-          position: absolute;
-          left: 50%;
-          transform: translateX(-50%);
-      }
-      .finished{
-          text-decoration: line-through;
-          color: grey;
-      }
-      .todo{
-          outline: none;
-          width:25%;
-      }
-      .delbut{
-          color:red;
-          float: right;
-      }
-      .list{
-          margin: 5px;
-      }
-      .edit{
-          display:none;
-      }
-  </style>
-</head>
-<body>
-    <script src="./vue.js"></script>
-    <h1 class = 'head'>TO DO LIST</h1>
-    <div class = "parent">
-    <div id = "app">
+<template>
+ <div class = "parent">
+    <div id = "todolist">
         <input v-model = "newtodo" v-on:keyup.enter = "addnew" style ="width:400px">
         <button v-on:click = "addnew" style="float:right">Add</button>
 
         <ul class = "todolist">
-            <li class = "list" v-for = "todo in todos">
+            <li class = "list" v-for = "todo in todos" :key="todo.id">
                 <input type="checkbox" v-on:click = "done(todo)" v-model = "todo.isFinish" >
                 <!-- <input v-model = "todo.text" class = "todo" v-bind:class = "{finished: todo.isFinish}"> -->
                 <span class = "todo" v-bind:class= "{finished: todo.isFinish, edit: todo.editing}" v-on:click = "editTodo(todo)">{{todo.text}}</span>
@@ -69,13 +24,21 @@
         
     </div>
     </div>
+</template>
 
-    <script>
-        var app = new Vue({
-            el: '#app',
-            data: {
-                todos: []
-            },
+<script>
+export default {
+  name: 'todolist',
+  // data () {
+  //   return {
+  //     msg: 'Welcome to Your Vue.js App'
+  //   }
+  // }
+              data (){
+                  return{
+                  todos: []
+                  }
+              },
             computed:{
                 remain: function(){
                     return this.todos.filter(function(todo){
@@ -138,9 +101,44 @@
                     }
                 }
             }
+}
+</script>
 
-        })
-    </script>
-    
-</body>
-</html>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+      li{
+          list-style:none;  
+      }
+      ul{
+          padding: 0;
+      }
+      .head{
+          text-align: center;
+      }
+      .parent{
+          position:relative;
+      }
+      #todolist{
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+      }
+      .finished{
+          text-decoration: line-through;
+          color: grey;
+      }
+      .todo{
+          outline: none;
+          width:25%;
+      }
+      .delbut{
+          color:red;
+          float: right;
+      }
+      .list{
+          margin: 5px;
+      }
+      .edit{
+          display:none;
+      }
+</style>

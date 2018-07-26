@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+li{
+  list-style:none;  
+}
+ul{
+  padding: 0;
+}
+#root{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.todolist{
+  width: 800px;
+  position: relative;
+}
+
+.Add{
+  float: right;
+}
+.Addinput{
+  width: 250px;
+}
+
+.finished{
+  text-decoration: line-through;
+  color: grey;
+}
+.delbut{
+  color:red;
+  float: right;
+}
+.list{
+  margin-top: 5px;
+}
+.edit{
+  display:none;
+}
+.title{
+  text-align: center;
+}

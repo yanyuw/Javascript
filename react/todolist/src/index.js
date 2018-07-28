@@ -15,7 +15,8 @@ class Addnew extends React.Component {
             var item = {
                 id: newid,
                 text: value,
-                complete: false
+                complete: false,
+                editing: false
             }
             this.refs.text.value = '';//清空input
             this.props.AddTask(item);
@@ -41,6 +42,9 @@ class Todoitem extends React.Component {
         super(props);
         this.check = this.check.bind(this);
         this.del = this.del.bind(this);
+        this.edit = this.edit.bind(this);
+        this.enter = this.enter.bind(this);
+        this.finishEdit = this.finishEdit.bind(this);
     }
     
     check(){
@@ -51,13 +55,40 @@ class Todoitem extends React.Component {
         this.props.DeleteTask(this.props.todo.id);
         
     }
+    edit(){
+        this.props.Edit(this.props.todo.id);
+    }
+
+    finishEdit(){
+        var value = this.refs.new.value;
+        if(value !== ''){
+            this.refs.new.value = '';//清空input
+            this.props.EditTask(this.props.todo.id, value);
+            
+        }
+    }
+    enter(e){
+        if(e.keyCode === 13){//回车
+            this.finishEdit();
+        }
+    }
+    
     render(){
         var item = this.props.todo;
         var text = item.complete ? "finished" : "";
+        var edit = "";
+        if(item.editing){
+            text += "view";
+        }else{
+            edit += "view";
+        }
+
         return (
             <li className="list">
                 <input type="checkbox" onClick= {this.check} checked={item.complete}/>
-                <span className={text}>{item.text}</span>
+                <span className={text} onClick= {this.edit}>{item.text}</span>
+                <input type="text" ref="new" className={edit} placeholder={item.text} onKeyUp = {this.enter} />
+                {/* <Input text={item.text} css={edit}/> */}
                 <button className="delbut" onClick = {this.del}>x</button>
             </li>
         )
@@ -72,11 +103,13 @@ class Todolist extends React.Component {
             //     {
             //     id: 1,
             //     text: 1,
-            //     complete: false
+            //     complete: false,
+            //     eidting: false
             // },{
             //     id: 2,
             //     text: "你好",
-            //     complete: false           }
+            //     complete: false,
+            //     editing: true           }
         ],
             finish:0,
         }
@@ -94,10 +127,11 @@ class Todolist extends React.Component {
             if(todo.id === id){
                 todo.complete = !todo.complete;
                 if(todo.complete == true){
-                    num--;
-                }else{
                     num++;
+                }else{
+                    num--;
                 }
+                break;
             }
         }
         this.setState({
@@ -148,6 +182,27 @@ class Todolist extends React.Component {
             finish: 0
         })
     }
+    Edit(id){
+        let todos = this.state.todos;
+        for(let todo of todos){
+            if(todo.id === id){
+                todo.editing = !todo.editing;
+                break;
+            }
+        }
+        this.setState({todos});
+    }
+    EditTask(id, text){
+        let todos = this.state.todos;
+        for(let todo of todos){
+            if(todo.id === id){
+                todo.text = text;
+                todo.editing = !todo.editing;
+                break; 
+            }
+        }
+        this.setState({todos});
+    }
     
     render() {
       return (
@@ -156,7 +211,8 @@ class Todolist extends React.Component {
               <Addnew AddTask = {this.AddTask.bind(this)} count={this.state.todos.length}/>
               <ul>
                 { this.state.todos.map((item, i) => {
-                    return <Todoitem todo={item}  CompleteTask = {this.CompleteTask.bind(this)} DeleteTask = {this.DeleteTask.bind(this)}/>
+                    return <Todoitem todo={item}  CompleteTask = {this.CompleteTask.bind(this)} 
+                            DeleteTask = {this.DeleteTask.bind(this)} Edit = {this.Edit.bind(this)} EditTask = {this.EditTask.bind(this)}/>
                 })}
               </ul>
               <button onClick={this.CompleteAll.bind(this)}>complete all</button>

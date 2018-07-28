@@ -43,3 +43,6 @@ ul{
 .title{
   text-align: center;
 }
+.view{
+  display:none;
+}
